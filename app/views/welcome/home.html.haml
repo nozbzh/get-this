@@ -1,2 +1,8 @@
 %h1
   Get This
+
+-# TODO: autocomplete and submit id to controller so we don't have to maintain an index on restaurant name
+= form_tag(search_restaurants_path) do
+  Restaurant
+  =text_field_tag :restaurant_name
+  =submit_tag 'Search'

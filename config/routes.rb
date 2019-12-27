@@ -3,5 +3,7 @@ Rails.application.routes.draw do
 
   root 'welcome#home'
 
-  resources :restaurants, only: [:show]
+  resources :restaurants, only: [:show] do
+    post 'search', on: :collection
+  end
 end

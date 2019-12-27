@@ -1,1 +1,5 @@
 %h1=@restaurant.name
+
+%ul
+  -@restaurant.items.each do |item|
+    %li="#{item.name}: #{@ratings_hash[item.id]}"
