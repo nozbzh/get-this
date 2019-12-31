@@ -7,8 +7,12 @@
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-  %body.text-center
-    %p.notice=notice
-    %p.alert=alert
 
-    = yield
+  %body.text-center
+    = render 'shared/header'
+    = render 'shared/flash'
+
+    .page-body
+      = yield
+
+    = render 'shared/footer'
