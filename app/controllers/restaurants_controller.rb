@@ -20,6 +20,7 @@ class RestaurantsController < ApplicationController
   end
 
   def search
+    # restaurant = Restaurant.find(params[:id])
     restaurant = Restaurant.find_by_name(params[:restaurant_name])
     if restaurant
       flash[:notice] = nil # Bandaid. Figure out why it stays set from the `else` branch
