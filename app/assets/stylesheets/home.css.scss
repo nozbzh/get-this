@@ -1,0 +1,169 @@
+.cover {
+  background-size: cover;
+  background-repeat:no-repeat;
+  background-position-x: center;
+  min-height: 50vh;
+}
+
+.main {
+  background-image: url('food.jpg');
+}
+
+.showcase {
+  display: flex;
+  margin: 0% 5%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.logo {
+  height: fit-content;
+}
+
+.logo img {
+  max-width: 18em;
+}
+
+input[type="text"] {
+  font-size: 24px;
+  padding-left: .8em;
+}
+
+.search-form {
+  margin-top: 1em;
+  //margin-bottom: 4em;
+}
+
+.search {
+  border-radius: 25px 0px 0px 25px;
+}
+
+.btn-success {
+  font-size: 24px;
+  padding: .1em .8em;
+  border-radius: 0px 25px 25px 0px;
+}
+
+.showcase {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 30%;
+}
+
+.spacer {
+  height: 10vh;
+}
+
+.featured {
+  flex-basis: 30%;
+  z-index: 1;
+  position: relative;
+}
+
+.featured > .label {
+  background-color: white;
+  width:100%;
+  opacity: 80%;
+  position: absolute;
+  left: 50%;                        /* horizontal alignment */
+  top: 50%;                         /* vertical alignment */
+  transform: translate(-50%, -50%);
+}
+
+.ft-img > img {
+  width: 100%;
+}
+
+.about {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.explainer {
+  border: purple solid;
+  border-width: 2px;
+  border-color: lightseagreen;
+  flex-basis: 30%;
+  height: 400px;
+  background-color: plum;
+}
+
+@media only screen and (max-device-width: 480px) {
+  .main {
+    background-image: url('food-mobile.jpg');
+    //min-height: 30%;
+  }
+
+  input[type="text"] {
+    font-size: 1.6em;
+    padding: 10px 25px 10px 25px;
+  }
+
+  .showcase {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    height: auto;
+  }
+
+  .featured {
+    width: 80%;
+    background-color: white;
+    margin-bottom: 5%;
+  }
+
+  .featured img {
+    width: 100%;
+    height: 450px;
+  }
+
+  .spacer {
+    height: 3em;
+  }
+
+  .featured > .label {
+    font-size: 2em;
+  }
+
+  .featured#item_4,#item_5,#item_6 {
+    display: none;
+  }
+
+  .about {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    margin-top: 5%;
+  }
+
+  .btn-success {
+    font-size: 48px;
+    padding: 10px 25px 10px 25px;
+  }
+
+  .about {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    margin-top: 5%;
+  }
+
+  .explainer {
+    border: purple solid;
+    border-width: 2px;
+    border-color: lightseagreen;
+    flex-basis: 33%;
+    width: 80%;
+    background-color: plum;
+    margin:5% 5px 2.5% 5px;
+    padding: 5%;
+  }
+}

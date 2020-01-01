@@ -1,0 +1,13 @@
+.page-header {
+  flex-shrink: 0;
+}
+
+ul.hmenu {
+  display: flex;
+}
+
+ul.hmenu li {
+  margin-left: auto;
+  display: inline;
+  width: 100%;
+}
