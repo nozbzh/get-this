@@ -1,13 +1,51 @@
-%h1
-  Get This
+.page-body-content
+  .cover.main
+    %div.logo
+      = link_to image_tag( 'Logo-web.png'), './', class: "home-target"
 
--# This is just used to pass data to the restaurant_search React component
-#restaurants_data{data: @restaurants.to_json}
+    %div.search-form
+      -# This is just used to pass data to the restaurant_search React component
+      #restaurants_data{data: @restaurants.to_json}
 
-= form_tag(search_restaurants_path, id: 'restaurant-form') do
-  Restaurant
-  #search-input-field
-  =hidden_field_tag :restaurant_id, nil, id: 'restaurant-id'
-  =submit_tag 'Search', class: "btn-success"
+      = form_tag(search_restaurants_path, id: 'restaurant-form') do
+        Restaurant
+        #search-input-field
+        =hidden_field_tag :restaurant_id, nil, id: 'restaurant-id'
+        =submit_tag 'Search', class: "btn-success"
+
+  .spacer
+
+  .showcase
+    .featured#item_1
+      %h4.label Souvla
+      .ft-img=image_tag "food-mobile.jpg"
+    .featured#item_2
+      %h4.label Doppio Zero
+      .ft-img=image_tag "food-mobile.jpg"
+    .featured#item_3
+      %h4.label Burma Love
+      .ft-img=image_tag "food-mobile.jpg"
+    .featured#item_4
+      %h4.label Orenchi
+      .ft-img=image_tag "food-mobile.jpg"
+    .featured#item_5
+      %h4.label Harbor Villa Dim Sum
+      .ft-img=image_tag "food-mobile.jpg"
+    .featured#item_6
+      %h4.label Smitten
+      .ft-img=image_tag "food-mobile.jpg"
+
+  .spacer
+
+  .about
+    .explainer#step_1
+      %h3 Step 1
+      %p Search for a Restaurant
+    .explainer#step_2
+      %h3 Step 2
+      %p Remember what you love, hate and want-to-try!
+    .explainer#step_3
+      %h3 Step 3
+      %p Order Again!
 
 = javascript_pack_tag 'restaurant_search'

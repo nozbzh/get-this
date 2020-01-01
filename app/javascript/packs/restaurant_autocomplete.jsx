@@ -149,6 +149,8 @@ class Autocomplete extends Component {
         <input
           type="text"
           name="restaurant_name"
+          placeholder="Find a Restaurant..."
+          className="search"
           autoComplete="off"
           onChange={onChange}
           onKeyDown={onKeyDown}
