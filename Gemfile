@@ -11,6 +11,7 @@ gem 'webpacker', '~> 4.0'
 gem 'turbolinks', '~> 5'
 gem 'haml'
 gem 'devise'
+gem 'httparty'
 
 gem 'bootsnap', '>= 1.4.2', require: false
 

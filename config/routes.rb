@@ -3,6 +3,10 @@ Rails.application.routes.draw do
 
   root 'welcome#home'
 
+  namespace :api, defaults: { format: :json } do
+    resources :restaurants, only: [:index]
+  end
+
   resources :restaurants, only: [:show] do
     post 'search', on: :collection
   end
