@@ -19,7 +19,7 @@
 html, body {
   height: 100%;
   background-color: white;
-  font-size: 24px;
+  font-size: 1.125em;
 }
 
 body {
@@ -32,14 +32,16 @@ body {
   flex-shrink: 0;
 }
 
+.page-footer {
+  font-size: .5em;
+  padding: 2em 0em;
+}
+
 .page-body {
   flex-grow: 1;
 }
 
 ul.hmenu {
-  // list-style: none;
-  // margin: 0 0 2em;
-  // padding: 0;
   display: flex;
   align-items: right;
   justify-content: center;
@@ -52,73 +54,95 @@ ul.hmenu li {
   width: 100%;
 }
 .container {
+
+  //align-items: center;
+  //justify-content: center;
+
+}
+
+/* MAIN VIEW */
+.cover {
+  background-size: cover;
+  background-repeat:no-repeat;
+  background-position-x: center;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+.main {
+  background-image: url('food.jpg');
+  height: 20em;
 }
 /*********************/
 
 /* RESTAURANT ITEMS VIEW */
-.restaurant-cover {
-  font-size: 24px;
-  width: 100%;
-  height: 200px;
-  background-color: white;
-  margin-left: 5px;
-  margin-right: 5px;
-  flex-basis: 100%;
-  z-index: 1;
+.restaurant {
+  background-image: url('food-mobile.jpg');
+  height: 10em;
 }
 
 .restaurant-photo {
 }
 
 .restaurant-label {
+  width: 100%;
+  padding: 1em 0em;
   background-color: white;
-  width:100%;
   opacity: 80%;
-  position: relative;
-  left: 0; top: 85%; right: 0; bottom: 0;
-  z-index: 10;
+}
+
+ul.menu-items {
+  list-style: none;
+  text-align: left;
+  margin-top: 1em;
+
+}
+
+div.li.menu-item {
+  padding-left: 1em;
+  display: flex;
+  align-items: center;
+}
+
+div.menu-item-name {
+  padding-left: .5em;
+}
+
+div.push {
+  margin-left: auto;
+}
+
+.rating {
+  padding-right: 1em;
 }
 /*********************/
 
-.cover {
-  text-align: center;
-  background-image: url('food.jpg');
-  background-size: cover;
-  background-repeat:no-repeat;
-  background-position-x: center;
-  //flex-basis: 100%;
-}
-
-.logo {
-  //width: 100%;
-}
 
 .logo img {
-  //width: 60%;
-  height: 50px;
+  max-width: 18em;
 }
 
 input[type="text"] {
   font-size: 24px;
-  padding: 10px 25px 10px 25px;
+  padding-left: .8em;
 }
 
 .search-form {
-  margin-top: 10%;
+  margin-top: 1em;
+  //margin-bottom: 4em;
 }
 
 .search {
-  padding: 10px;
   border-radius: 25px 0px 0px 25px;
 }
 
 .btn-success {
   font-size: 24px;
-  padding: 10px 25px 10px 25px;
+  padding: .1em .8em;
   border-radius: 0px 25px 25px 0px;
 }
 
@@ -176,22 +200,34 @@ input[type="text"] {
 
 @media only screen and (max-device-width: 480px) {
   html, body {
-    font-size: 48px;
+    font-size: 2em;
   }
 
-  .cover {
+//XXX THIS IS A MESS
+ .cover {
+  //   background-size: cover;
+  //   background-repeat:no-repeat;
+  //   background-position-x: center;
+    display: flex;
+    margin: 0em;
+    padding: 0em;
+  //   align-items: center;
+  //   justify-content: center;
+    flex-direction: column;
     text-align: center;
+    font-size: 1.8rem;
+
+    text-align: center;
+    // background-image: url('food-mobile.jpg');
+  }
+  .main {
     background-image: url('food-mobile.jpg');
-    height: 50%;
-    background-position: center;
+    //height: 20em;
+    width: 100%;
   }
-
-  .logo {
-    width: 80%;
-  }
-
-  .logo img {
-    width: 80%;
+  .restaurant {
+    background-image: url('food-mobile.jpg');
+    height: 5em;
   }
 
   input[type="text"] {
@@ -248,5 +284,24 @@ input[type="text"] {
     background-color: plum;
     margin:5% 5px 2.5% 5px;
     padding: 5%;
+  }
+
+  .rating {
+    padding-right: .1em;
+  }
+
+  ul.menu-items {
+    list-style: none;
+    text-align: left;
+    margin-top: 1em;
+
+  }
+  div.li.menu-item {
+    padding-left: 0em;
+    display: flex;
+    align-items: left;
+  }
+  div.menu-item-name {
+    padding-left: 0em;
   }
 }

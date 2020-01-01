@@ -1,12 +1,13 @@
 .container
-  .cover
-    =image_tag "Logo-web.png", :class => "logo"
+  .cover.main
+    %div.logo
+      =image_tag "Logo-web.png" #, :class => "logo"
 
     -# TODO: autocomplete and submit id to controller so we don't have to maintain an index on restaurant name
-    .search-form
-    = form_tag(search_restaurants_path) do
-      =text_field_tag :restaurant_name, nil, placeholder: 'Find a Restaurant...', :class => "search"
-      =submit_tag 'Search', class: "btn-success"
+    %div.search-form
+      = form_tag(search_restaurants_path) do
+        =text_field_tag :restaurant_name, nil, placeholder: 'Find a Restaurant...', :class => "search"
+        =submit_tag 'Search', class: "btn-success"
 
   .showcase
     .featured#item_1
