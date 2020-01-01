@@ -1,8 +1,40 @@
-%h1
-  Get This
+.container
+  .cover
+    =image_tag "Logo-web.png", :class => "logo"
 
--# TODO: autocomplete and submit id to controller so we don't have to maintain an index on restaurant name
-= form_tag(search_restaurants_path) do
-  Restaurant
-  =text_field_tag :restaurant_name
-  =submit_tag 'Search', class: "btn-success"
+    -# TODO: autocomplete and submit id to controller so we don't have to maintain an index on restaurant name
+    .search-form
+    = form_tag(search_restaurants_path) do
+      =text_field_tag :restaurant_name, nil, placeholder: 'Find a Restaurant...', :class => "search"
+      =submit_tag 'Search', class: "btn-success"
+
+  .showcase
+    .featured#item_1
+      .label Souvla
+      =image_tag "food-mobile.jpg"
+    .featured#item_2
+      .label Doppio Zero
+      =image_tag "food-mobile.jpg"
+    .featured#item_3
+      .label Burma Love
+      =image_tag "food-mobile.jpg"
+    .featured#item_4
+      .label Orenchi
+      =image_tag "food-mobile.jpg"
+    .featured#item_5
+      .label Harbor Villa Dim Sum
+      =image_tag "food-mobile.jpg"
+    .featured#item_6
+      .label Smitten
+      =image_tag "food-mobile.jpg"
+
+  .about
+    .explainer#step_1
+      %h3 Step 1
+      %p Search for a Restaurant
+    .explainer#step_2
+      %h3 Step 2
+      %p Remember what you love, hate and want-to-try!
+    .explainer#step_3
+      %h3 Step 3
+      %p Order Again!

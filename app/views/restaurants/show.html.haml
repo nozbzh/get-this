@@ -1,5 +1,9 @@
-%h1=@restaurant.name
 
-%ul
-  -@restaurant.items.each do |item|
-    %li="#{item.name}: #{@ratings_hash[item.id]}"
+.container
+  .restaurant-cover
+    .restaurant-label=@restaurant.name
+    =image_tag "food-mobile.jpg"
+
+  %ul
+    -@restaurant.items.each do |item|
+      %li="#{item.name}: #{@ratings_hash[item.id]}"
