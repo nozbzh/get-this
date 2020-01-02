@@ -20,7 +20,13 @@ class RestaurantsController < ApplicationController
   end
 
   def search
-    restaurant = Restaurant.find(params[:restaurant_id])
+    restaurant = nil
+    id = params[:restaurant_id]
+
+    if id.match(/\d+/)
+      restaurant = Restaurant.find(id)
+    end
+
     if restaurant
       flash[:notice] = nil # Bandaid. Figure out why it stays set from the `else` branch
       redirect_to restaurant_path(restaurant.id)
