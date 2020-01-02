@@ -154,7 +154,7 @@ class RapidApiClient
     def update_requests_remaining remaining
       $stderr.puts "#{remaining} api calls remaining"
 
-      RapidApiQuotum.update_remaining = remaining
+      RapidApiQuotum.update_remaining(remaining)
       raise QuotaReachedError if quota_reached?
     end
 
