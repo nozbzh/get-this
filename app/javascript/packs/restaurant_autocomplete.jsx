@@ -31,6 +31,15 @@ class Autocomplete extends Component {
   onChange = e => {
     const { suggestions } = this.props;
     const userInput = e.currentTarget.value;
+    const submitNode = document.getElementById('search-submit')
+
+    if (userInput === '') {
+      submitNode.disabled = true
+      submitNode.style.cursor = 'not-allowed'
+    } else {
+      submitNode.disabled = false
+      submitNode.style.cursor = ''
+    }
 
     // Filter our suggestions that don't contain the user's input
     const filteredSuggestions = suggestions.filter(
@@ -69,13 +78,18 @@ class Autocomplete extends Component {
     const { activeSuggestion, filteredSuggestions } = this.state;
 
     // User pressed the enter key, update the input and close the
-    // suggestions
+    // suggestions, then submit the form
     if (e.keyCode === 13) {
       this.setState({
         activeSuggestion: 0,
         showSuggestions: false,
-        userInput: filteredSuggestions[activeSuggestion.name]
+        userInput: filteredSuggestions[activeSuggestion].name
       });
+
+      const form = document.getElementById('restaurant-form')
+      const idField = document.getElementById('restaurant-id')
+      idField.value = filteredSuggestions[activeSuggestion].id
+      form.submit()
     }
     // User pressed the up arrow, decrement the index
     else if (e.keyCode === 38) {

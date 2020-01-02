@@ -1,6 +1,9 @@
 class RapidApiQuotum < ApplicationRecord
+  MAX_QUOTA = 500
+
   class << self
     def remaining
+      record = first_or_create(requests_remaining: MAX_QUOTA)
       first.requests_remaining
     end
 
