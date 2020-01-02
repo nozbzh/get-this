@@ -1,18 +1,17 @@
 
 .container
-  %div.cover.restaurant
-    %div.restaurant-label
+  .cover.restaurant
+    .restaurant-label
       =@restaurant.name
     //=image_tag "food-mobile.jpg"
 
-  %div
-    %ul.menu-items
-      -@restaurant.items.each do |item|
-        %div.li.menu-item
-          %div.menu-item-name="#{item.name}" #" #{@ratings_hash[item.id]}"
-          %div.rating.push.i.far.fa-thumbs-up
-          %div.rating.i.far.fa-thumbs-down
-          %div.rating.i.fas.fa-times
-          %div.rating.i.far.fa-question-circle
+  %ul.menu-items
+    -@restaurant.items.each do |item|
+      %div.li.menu-item
+        %div.menu-item-name="#{item.name}" #" #{@ratings_hash[item.id]}"
+        %div.rating.push.i.far.fa-thumbs-up
+        %div.rating.i.far.fa-thumbs-down
+        %div.rating.i.fas.fa-times
+        %div.rating.i.far.fa-question-circle
 
 

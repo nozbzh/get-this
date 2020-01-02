@@ -25,15 +25,57 @@
 .logo img {
   max-width: 18em;
 }
+///////
+
+input {
+  border: 1px solid #999;
+  padding: 0.5rem;
+  //width: 300px;
+}
 
 input[type="text"] {
   font-size: 24px;
   padding-left: .8em;
 }
+.no-suggestions {
+  color: #999;
+  padding: 0.5rem;
+}
 
-.search-form {
+.suggestions {
+  border: 1px solid #999;
+  border-top-width: 0;
+  list-style: none;
+  margin-top: 0;
+  max-height: 143px;
+  overflow-y: auto;
+  padding-left: 0;
+  width: inherit;//calc(300px + 1rem);
+  position: absolute;
+}
+
+.suggestions li {
+  padding: 0.5rem;
+}
+
+.suggestion-active,
+.suggestions li:hover {
+  background-color: #008f68;
+  color: #fae042;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.suggestions li:not(:last-of-type) {
+  border-bottom: 1px solid #999;
+  background-color: white;
+}
+//////////////////////
+#restaurant-form {
   margin-top: 1em;
-  //margin-bottom: 4em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .search {
@@ -44,6 +86,10 @@ input[type="text"] {
   font-size: 24px;
   padding: .1em .8em;
   border-radius: 0px 25px 25px 0px;
+}
+
+.btn-success#submit {
+  flex: 0 0
 }
 
 .showcase {

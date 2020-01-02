@@ -1,17 +1,13 @@
 .page-body-content
   .cover.main
-    %div.logo
-      = link_to image_tag( 'Logo-web.png'), './', class: "home-target"
+    .logo
+      = link_to image_tag( 'Logo-web.png'), root_path, class: "home-target"
 
-    %div.search-form
-      -# This is just used to pass data to the restaurant_search React component
-      #restaurants_data{data: @restaurants.to_json}
 
-      = form_tag(search_restaurants_path, id: 'restaurant-form') do
-        Restaurant
-        #search-input-field
-        =hidden_field_tag :restaurant_id, nil, id: 'restaurant-id'
-        =submit_tag 'Search', class: "btn-success"
+    = form_tag(search_restaurants_path, id: 'restaurant-form') do
+      .search-form#search-input-field
+      =hidden_field_tag :restaurant_id, nil, id: 'restaurant-id'
+      =submit_tag 'Search', class: 'btn-success', id: 'submit'
 
   .spacer
 
@@ -47,5 +43,8 @@
     .explainer#step_3
       %h3 Step 3
       %p Order Again!
+
+-# This is just used to pass data to the restaurant_search React component
+#restaurants_data{data: @restaurants.to_json}
 
 = javascript_pack_tag 'restaurant_search'
