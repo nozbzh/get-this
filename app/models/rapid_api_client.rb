@@ -20,7 +20,7 @@ class RapidApiClient
       raise QuotaReachedError if quota_reached?
 
       raw_restaurants_data = []
-      url = build_url(latitude, longitude, distance)
+      url = build_restaurant_search_url(latitude, longitude, distance)
       response = HTTParty.get(url, headers: HEADERS)
       body = response.parsed_response
 
@@ -31,7 +31,7 @@ class RapidApiClient
         raw_restaurants_data = raw_restaurants_data + body['result']['data']
 
         next_page = body['result']['page'] + 1
-        next_page_url = build_url(latitude, longitude, distance, next_page)
+        next_page_url = build_restaurant_search_url(latitude, longitude, distance, next_page)
         response = HTTParty.get(next_page_url, headers: HEADERS)
         body = response.parsed_response
 
@@ -43,15 +43,45 @@ class RapidApiClient
       # on a single page.
       raw_restaurants_data = raw_restaurants_data + body['result']['data']
 
-      write_all_to_db(raw_restaurants_data)
+      write_restaurants_data_to_db(raw_restaurants_data)
     end
 
     # `alias` to make it clear this is to be used both for initial bootstrap and periodic refreshes
     alias_method :bootstrap_restaurants_table_for_coordinates, :add_new_restaurants_for_coordinates
 
+    def add_menu_items_for_restaurant restaurant
+      raise QuotaReachedError if quota_reached?
+
+      raw_menus_data = []
+      url = build_menu_search_url(restaurant)
+      response = HTTParty.get(url, headers: HEADERS)
+      body = response.parsed_response
+
+      remaining  = response.headers['x-ratelimit-requests-remaining'].to_i
+      more_pages = body['result']['morePages']
+
+      while needs_another_request?(more_pages, remaining) do
+        raw_menus_data = raw_menus_data + body['result']['data']
+
+        next_page = body['result']['page'] + 1
+        next_page_url = build_menu_search_url(restaurant, next_page)
+        response = HTTParty.get(next_page_url, headers: HEADERS)
+        body = response.parsed_response
+
+        remaining  = response.headers['x-ratelimit-requests-remaining']
+        more_pages = body['result']['morePages']
+      end
+
+      # This appends the results from the last page. It also catches the case when all results fit
+      # on a single page.
+      raw_menus_data = raw_menus_data + body['result']['data']
+
+      write_menu_data_to_db(raw_menus_data, restaurant)
+    end
+
     private
 
-    def write_all_to_db raw_data
+    def write_restaurants_data_to_db raw_data
       # First, get the rapid api ids
       raw_data_ids = raw_data.map { |data| data['restaurant_id'] }
 
@@ -67,7 +97,7 @@ class RapidApiClient
       raw_data.each do |data|
         begin
           next if ids_to_skip[data['restaurant_id']]
-          write_to_db(data)
+          write_restaurant_data_to_db(data)
         rescue => e
           $stderr.puts "Error saving restaurant #{data['restaurant_name']} (#{data['restaurant_id']})."
           $stderr.puts "#{e.message}"
@@ -76,7 +106,7 @@ class RapidApiClient
       end
     end
 
-    def write_to_db restaurant_data
+    def write_restaurant_data_to_db restaurant_data
       geo = restaurant_data['geo']
       address = restaurant_data['address']
 
@@ -92,32 +122,45 @@ class RapidApiClient
       r.latitude = geo['lat']
       r.longitude = geo['lon']
 
-      # They all seem empty, let's skip this for now
-      # if restaurant_data['menus']
-      #   write_menu_data_to_db(restaurant_data['menus'])
-      # end
-
       r.save!
     end
 
-    # def write_menu_data_to_db menu_data
-    #   menu_data.each do |menu_item|
-    #     write_menu_item_to_db(menu_item)
-    #   end
-    # end
+    def write_menu_data_to_db menu_data, restaurant
+      menu_data.each do |menu_item|
+        begin
+          write_menu_item_to_db(menu_item, restaurant)
+        rescue => e
+          $stderr.puts "Error saving menu item #{menu_item['menu_item_name']} for restaurant #{menu_item['restaurant_id']} (#{menu_item['restaurant_name']})."
+          $stderr.puts "#{e.message}"
+          next
+        end
+      end
+    end
 
-    # def write_menu_item_to_db menu_item
+    def write_menu_item_to_db menu_item_data, restaurant
+      i = Item.new(restaurant: restaurant)
+      i.rapid_api_id = menu_item_data['item_id']
+      i.rapid_api_restaurant_id = menu_item_data['restaurant_id']
+      i.description = menu_item_data['menu_item_description']
+      i.name = menu_item_data['menu_item_name']
 
-    # end
+      if menu_item_data['menu_item_pricing'].first
+        i.price = menu_item_data['menu_item_pricing'].first['price']
+      end
+
+      i.save!
+    end
 
     def update_requests_remaining remaining
-      # TODO: save in DB
+      $stderr.puts "#{remaining} api calls remaining"
+
+      RapidApiQuotum.update_remaining = remaining
       raise QuotaReachedError if quota_reached?
     end
 
     def quota_reached?
-      # TODO: read from DB and reset at begining of month
-      return false
+      # TODO: reset at begining of month
+      RapidApiQuotum.remaining <= 0
     end
 
     # TODO: name is inaccurate and it has hidden behavior
@@ -126,7 +169,11 @@ class RapidApiClient
       more_pages
     end
 
-    def build_url latitude, longitude, distance, page = 1
+    def build_menu_search_url restaurant, page = 1
+      "#{BASE_URL}/restaurant/#{restaurant.rapid_api_id}/menuitems?page=#{page}"
+    end
+
+    def build_restaurant_search_url latitude, longitude, distance, page = 1
       "#{BASE_URL}/restaurants/search/geo?page=#{page}&lon=#{longitude}&lat=#{latitude}&distance=#{distance}"
     end
   end

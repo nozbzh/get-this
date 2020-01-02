@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_02_002702) do
+ActiveRecord::Schema.define(version: 2020_01_02_020416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,18 @@ ActiveRecord::Schema.define(version: 2020_01_02_002702) do
     t.bigint "restaurant_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "description"
+    t.integer "rapid_api_id"
+    t.integer "rapid_api_restaurant_id"
+    t.float "price"
+    t.index ["rapid_api_restaurant_id"], name: "index_items_on_rapid_api_restaurant_id"
     t.index ["restaurant_id"], name: "index_items_on_restaurant_id"
+  end
+
+  create_table "rapid_api_quota", force: :cascade do |t|
+    t.integer "requests_remaining"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "rapid_api_restaurants", force: :cascade do |t|
