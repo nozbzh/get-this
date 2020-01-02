@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_31_224310) do
+ActiveRecord::Schema.define(version: 2020_01_02_020416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,36 @@ ActiveRecord::Schema.define(version: 2019_12_31_224310) do
     t.bigint "restaurant_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "description"
+    t.integer "rapid_api_id"
+    t.integer "rapid_api_restaurant_id"
+    t.float "price"
+    t.index ["rapid_api_restaurant_id"], name: "index_items_on_rapid_api_restaurant_id"
     t.index ["restaurant_id"], name: "index_items_on_restaurant_id"
+  end
+
+  create_table "rapid_api_quota", force: :cascade do |t|
+    t.integer "requests_remaining"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "rapid_api_restaurants", force: :cascade do |t|
+    t.string "name"
+    t.integer "rapid_api_id"
+    t.string "full_address"
+    t.string "street"
+    t.string "city"
+    t.string "state"
+    t.string "postal_code"
+    t.string "phone"
+    t.float "latitude"
+    t.float "longitude"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["city"], name: "index_rapid_api_restaurants_on_city"
+    t.index ["postal_code"], name: "index_rapid_api_restaurants_on_postal_code"
+    t.index ["rapid_api_id"], name: "index_rapid_api_restaurants_on_rapid_api_id"
   end
 
   create_table "ratings", force: :cascade do |t|
