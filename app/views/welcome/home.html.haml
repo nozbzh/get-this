@@ -7,7 +7,7 @@
     = form_tag(search_restaurants_path, id: 'restaurant-form') do
       .search-form#search-input-field
       =hidden_field_tag :restaurant_id, nil, id: 'restaurant-id'
-      =submit_tag 'Search', class: 'btn-success', id: 'submit'
+      =submit_tag 'Search', class: 'btn-success'
 
   .spacer
 
