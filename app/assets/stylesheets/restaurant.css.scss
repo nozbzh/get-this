@@ -13,24 +13,24 @@
   opacity: 80%;
 }
 
-ul.menu-items {
+.menu-items {
   list-style: none;
   text-align: left;
   margin-top: 1em;
 
 }
 
-div.li.menu-item {
+.menu-item {
   padding-left: 1em;
   display: flex;
   align-items: center;
 }
 
-div.menu-item-name {
+.menu-item-name {
   padding-left: .5em;
 }
 
-div.push {
+.push {
   margin-left: auto;
 }
 
@@ -46,18 +46,18 @@ div.push {
   .rating {
     padding-right: .1em;
   }
-  ul.menu-items {
+  .menu-items {
     list-style: none;
     text-align: left;
     margin-top: 1em;
 
   }
-  div.li.menu-item {
+  .menu-item {
     padding-left: 0em;
     display: flex;
     align-items: left;
   }
-  div.menu-item-name {
+  .menu-item-name {
     padding-left: 0em;
   }
 }
