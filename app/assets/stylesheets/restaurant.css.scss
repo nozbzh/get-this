@@ -13,29 +13,60 @@
   opacity: 80%;
 }
 
-.menu-items {
-  list-style: none;
-  text-align: left;
-  margin-top: 1em;
 
-}
 
 .menu-item {
+  flex: 1 0 auto;
   padding-left: 1em;
   display: flex;
-  align-items: center;
+  flex-direction: row;
+
+  // justify-content: space-between;
 }
 
 .menu-item-name {
-  padding-left: .5em;
+  // padding-left: .5em;
+  flex: 5;
 }
 
 .push {
   margin-left: auto;
 }
 
-.rating {
-  padding-right: 1em;
+.menu-items {
+  text-align: left;
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-rating {
+  flex: 1;
+  text-align: center;
+  justify-content: space-evenly;
+  align-items: center;
+  color: blue;
+  padding: .25em;
+}
+
+.love {
+  color: hotpink;
+}
+
+.ok {
+  color: lightgreen;
+}
+
+.hate {
+  color: red;
+}
+
+.ignore {
+  color: darkgray;
+}
+
+.save {
+  color: darkslateblue
 }
 
 @media only screen and (max-device-width: 480px) {
@@ -43,7 +74,7 @@
     background-image: url('food-mobile.jpg');
     height: 5em;
   }
-  .rating {
+  .ratings {
     padding-right: .1em;
   }
   .menu-items {
