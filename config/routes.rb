@@ -5,6 +5,11 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     resources :restaurants, only: [:index]
+    resources :ratings, only: [:create] do
+      collection do
+        get 'get_restaurant_ratings_by_user'
+      end
+    end
   end
 
   resources :restaurants, only: [:show] do
