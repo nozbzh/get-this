@@ -13,29 +13,60 @@
   opacity: 80%;
 }
 
-ul.menu-items {
-  list-style: none;
-  text-align: left;
-  margin-top: 1em;
 
-}
 
-div.li.menu-item {
+.menu-item {
+  flex: 1 0 auto;
   padding-left: 1em;
   display: flex;
-  align-items: center;
+  flex-direction: row;
+
+  // justify-content: space-between;
 }
 
-div.menu-item-name {
-  padding-left: .5em;
+.menu-item-name {
+  // padding-left: .5em;
+  flex: 5;
 }
 
-div.push {
+.push {
   margin-left: auto;
 }
 
-.rating {
-  padding-right: 1em;
+.menu-items {
+  text-align: left;
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-rating {
+  flex: 1;
+  text-align: center;
+  justify-content: space-evenly;
+  align-items: center;
+  color: blue;
+  padding: .25em;
+}
+
+.love {
+  color: hotpink;
+}
+
+.ok {
+  color: lightgreen;
+}
+
+.hate {
+  color: red;
+}
+
+.ignore {
+  color: darkgray;
+}
+
+.save {
+  color: darkslateblue
 }
 
 @media only screen and (max-device-width: 480px) {
@@ -43,21 +74,21 @@ div.push {
     background-image: url('food-mobile.jpg');
     height: 5em;
   }
-  .rating {
+  .ratings {
     padding-right: .1em;
   }
-  ul.menu-items {
+  .menu-items {
     list-style: none;
     text-align: left;
     margin-top: 1em;
 
   }
-  div.li.menu-item {
+  .menu-item {
     padding-left: 0em;
     display: flex;
     align-items: left;
   }
-  div.menu-item-name {
+  .menu-item-name {
     padding-left: 0em;
   }
 }

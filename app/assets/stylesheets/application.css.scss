@@ -36,6 +36,13 @@
   flex: 1;
 }
 
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
 @media only screen and (max-device-width: 480px) {
   .page-body {
     font-size: 2em;
