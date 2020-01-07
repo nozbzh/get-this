@@ -8,24 +8,7 @@
   -# Just an empty div for React to hook to
   #items
 
-  -# .menu-items
-  -#   -@restaurant.items.each do |item|
-  -#     .menu-item
-  -#       .menu-item-name="#{item.name}" #" #{@ratings_hash[item.id]}"
-  -#       .btn-rating.push.i.far.fa-heart.love
-  -#       .btn-rating.i.far.fa-check-circle.ok
-  -#       .btn-rating.i.far.fa-thumbs-down.hate
-  -#       .btn-rating.rating.i.far.fa-bookmark.save
-  -#       .btn-rating.rating.i.far.fa-times-circle.ignore
-
-
-
   -#       -# .btn-rating.push.i.fas.fa-heart.love
-  -#       -# .btn-rating.i.fas.fa-check-circle.ok
-  -#       -# .btn-rating.i.fas.fa-thumbs-down.hate
-  -#       -# .btn-rating.rating.i.fas.fa-bookmark.save
-  -#       -# .btn-rating.rating.i.fas.fa-times-circle.ignore
-
 
 -# This is not visible and is just used to pass data to the menu_items React component
 #items-data{data: @restaurant.items.as_json(only: [:id, :name]).to_json}
