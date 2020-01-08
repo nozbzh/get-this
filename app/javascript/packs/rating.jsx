@@ -38,8 +38,6 @@ class Rating extends Component {
 
   isCurrentRating(){
     const { currentRating, ratingValue } = this.props
-    console.log(`${this.props.item.name}. currentRating: ${currentRating}. ratingValue: ${ratingValue}`)
-    // console.log(this.props)
     return (currentRating === ratingValue);
   }
 
