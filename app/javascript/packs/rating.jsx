@@ -1,18 +1,18 @@
 import React, { Component } from "react";
-// import axios from "axios";
+import axios from "axios";
 
 class Rating extends Component {
   getClasses() {
     switch (this.props.rating) {
-      case 1:
+      case 'love':
         return 'btn-rating push i far fa-heart love';
-      case 2:
+      case 'okay':
         return 'btn-rating i far fa-check-circle okay';
-      case 3:
+      case 'hate':
         return 'btn-rating i far fa-thumbs-down hate';
-      case 4:
+      case 'save':
         return 'btn-rating i far fa-bookmark save';
-      case 5:
+      case 'ignore':
         return 'btn-rating i far fa-times-circle ignore';
       default:
         return '';
@@ -23,33 +23,66 @@ class Rating extends Component {
     return `${this.props.item.name}-${this.props.rating}`;
   }
 
-  onClick = e => {
-    // axios.post('/api/ratings')
-    let newClasses
+  rate = async () => {
+    const { rating } = this.props;
+    const metas = document.getElementsByTagName('meta');
+    let authenticityToken
 
-    switch (this.props.rating) {
-      case 1:
+    for (let i = 0; i < metas.length; i++) {
+      if (metas[i].getAttribute('name') === 'csrf-token') {
+        authenticityToken = metas[i].getAttribute('content');
+      }
+    }
+
+    let response = await axios.post('/api/ratings/rate', {
+      rating: {
+        restaurant_id: this.props.restaurantId,
+        item_id: this.props.item.id,
+        rating: rating
+      },
+      authenticity_token: authenticityToken
+    });
+
+    const success = response.status === 200;
+
+    if (!success){
+      console.log(response)
+    }
+
+    return success;
+  }
+
+  onClick = e => {
+    const { rating } = this.props;
+    const success = this.rate();
+    let newClasses;
+
+    switch (rating) {
+      case 'love':
         newClasses = 'btn-rating push i fas fa-heart love';
         break;
-      case 2:
+      case 'okay':
         newClasses = 'btn-rating i fas fa-check-circle okay';
         break;
-      case 3:
+      case 'hate':
         newClasses = 'btn-rating i fas fa-thumbs-down hate';
         break;
-      case 4:
+      case 'save':
         newClasses = 'btn-rating i fas fa-bookmark save';
         break;
-      case 5:
+      case 'ignore':
         newClasses = 'btn-rating i fas fa-times-circle ignore';
         break;
       default:
         newClasses = '';
     }
 
-    let node = document.getElementById(this.getId());
-    node.className = newClasses;
-    // Find how to use newClasses and add them to the div
+    if (success){
+      let node = document.getElementById(this.getId());
+      node.className = newClasses;
+    } else {
+      alert('Something BAD happened');
+    }
   }
 
   render() {

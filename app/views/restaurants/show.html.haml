@@ -4,12 +4,11 @@
     .restaurant-label
       =@restaurant.name
     //=image_tag "food-mobile.jpg"
-
+    #restaurant-id{data: @restaurant.id}
   -# Just an empty div for React to hook to
   #items
 
-  -#       -# .btn-rating.push.i.fas.fa-heart.love
-
+-# TODO: fetch data from API instead
 -# This is not visible and is just used to pass data to the menu_items React component
 #items-data{data: @restaurant.items.as_json(only: [:id, :name]).to_json}
 = javascript_pack_tag 'menu_items'
