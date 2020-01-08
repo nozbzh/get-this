@@ -27,6 +27,7 @@ class Api::RatingsController < ApplicationController
         enveloppe[:rating] = rating
         render json: enveloppe, status: :ok
       else
+        Rails.logger.debug "rating: #{rating.inspect}"
         enveloppe[:errors] = rating.errors
         render json: enveloppe, status: :unprocessable_entity
       end
