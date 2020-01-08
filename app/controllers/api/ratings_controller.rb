@@ -2,11 +2,15 @@ class Api::RatingsController < ApplicationController
   before_action :ensure_authenticated
 
   def get_restaurant_ratings_by_user
-    byebug
-
     ratings = Rating.where(user_id: current_user.id, restaurant_id: params['restaurant_id'])
 
-    render json: ratings, status: :ok
+    data = {}
+
+    ratings.each do |rating|
+      data[rating.item_id] = rating.rating
+    end
+
+    render json: data, status: :ok
   end
 
   def rate
