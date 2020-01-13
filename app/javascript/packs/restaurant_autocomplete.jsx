@@ -1,21 +1,17 @@
 // From https://alligator.io/react/react-autocomplete/
 //
 import React, { Component, Fragment } from "react";
-import PropTypes from "prop-types";
+import axios from 'axios'
 
 class Autocomplete extends Component {
-  static propTypes = {
-    suggestions: PropTypes.instanceOf(Array)
-  };
-
-  static defaultProps = {
-    suggestions: []
-  };
-
   constructor(props) {
     super(props);
 
     this.state = {
+      // The full set of suggestions
+      suggestions: [],
+      // Flag when suggestions haven't loaded yet
+      isFetching: true,
       // The active selection's index
       activeSuggestion: 0,
       // The suggestions that match the user's input
@@ -27,9 +23,21 @@ class Autocomplete extends Component {
     };
   }
 
+  fetchRestaurants() {
+    let that = this
+
+    axios.get('/api/restaurants')
+      .then(function (response) {
+        that.setState({ suggestions: response.data, isFetching: false });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   // Event fired when the input value is changed
   onChange = e => {
-    const { suggestions } = this.props;
+    const { suggestions } = this.state;
     const userInput = e.currentTarget.value;
     const submitNode = document.getElementById('search-submit')
 
@@ -116,6 +124,7 @@ class Autocomplete extends Component {
       onKeyDown,
       state: {
         activeSuggestion,
+        isFetching,
         filteredSuggestions,
         showSuggestions,
         userInput
@@ -125,36 +134,46 @@ class Autocomplete extends Component {
     let suggestionsListComponent;
 
     if (showSuggestions && userInput) {
-      if (filteredSuggestions.length) {
-        suggestionsListComponent = (
-          <ul className="suggestions">
-            {filteredSuggestions.map((suggestion, index) => {
-              let className;
-
-              // Flag the active suggestion with a class
-              if (index === activeSuggestion) {
-                className = "suggestion-active";
-              }
-
-              return (
-                <li
-                  className={className}
-                  key={suggestion.id}
-                  data-id={suggestion.id}
-                  onClick={onClick}
-                >
-                  {suggestion.name}
-                </li>
-              );
-            })}
-          </ul>
-        );
-      } else {
+      if (isFetching) {
+        // TODO: there is bug here because filteredSuggestions do not get updated once data has been
+        // fetched, which takes it directly to `No suggestions, you're on your own!`
         suggestionsListComponent = (
           <div className="no-suggestions">
-            <em>No suggestions, you're on your own!</em>
+            <em>Fetching data...</em>
           </div>
         );
+      } else {
+        if (filteredSuggestions.length) {
+          suggestionsListComponent = (
+            <ul className="suggestions">
+              {filteredSuggestions.map((suggestion, index) => {
+                let className;
+
+                // Flag the active suggestion with a class
+                if (index === activeSuggestion) {
+                  className = "suggestion-active";
+                }
+
+                return (
+                  <li
+                    className={className}
+                    key={suggestion.id}
+                    data-id={suggestion.id}
+                    onClick={onClick}
+                  >
+                    {suggestion.name}
+                  </li>
+                );
+              })}
+            </ul>
+          );
+        } else {
+          suggestionsListComponent = (
+            <div className="no-suggestions">
+              <em>No suggestions, you're on your own!</em>
+            </div>
+          );
+        }
       }
     }
 
@@ -173,6 +192,10 @@ class Autocomplete extends Component {
         {suggestionsListComponent}
       </Fragment>
     );
+  }
+
+  componentDidMount() {
+    this.fetchRestaurants();
   }
 }
 

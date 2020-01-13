@@ -3,15 +3,9 @@
   .cover.restaurant
     .restaurant-label
       =@restaurant.name
-    //=image_tag "food-mobile.jpg"
 
-  %ul.menu-items
-    -@restaurant.items.each do |item|
-      %div.li.menu-item
-        %div.menu-item-name="#{item.name}" #" #{@ratings_hash[item.id]}"
-        %div.rating.push.i.far.fa-thumbs-up
-        %div.rating.i.far.fa-thumbs-down
-        %div.rating.i.fas.fa-times
-        %div.rating.i.far.fa-question-circle
+    #restaurant-id{data: @restaurant.id}
+  -# Just an empty div for React to hook to
+  #items
 
-
+= javascript_pack_tag 'menu_items'
