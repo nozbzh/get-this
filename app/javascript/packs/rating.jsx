@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+// TODO: make this a functional component
 class Rating extends Component {
   getClasses(isFilled) {
     if (isFilled) {
@@ -37,29 +38,31 @@ class Rating extends Component {
   }
 
   isCurrentRating(){
-    const { currentRating, ratingValue } = this.props
+    const { currentRating, ratingValue } = this.props;
     return (currentRating === ratingValue);
   }
 
   getId() {
-    return `${this.props.item.name}-${this.props.ratingValue}`;
+    const { item, ratingValue } = this.props;
+    return `${item.name}-${ratingValue}`;
   }
 
   rate = async () => {
-    const { ratingValue } = this.props;
+    const { ratingValue, item, restaurantId } = this.props;
     const metas = document.getElementsByTagName('meta');
-    let authenticityToken
+    let authenticityToken;
 
     for (let i = 0; i < metas.length; i++) {
       if (metas[i].getAttribute('name') === 'csrf-token') {
         authenticityToken = metas[i].getAttribute('content');
+        break;
       }
     }
 
     let response = await axios.post('/api/ratings/rate', {
       rating: {
-        restaurant_id: this.props.restaurantId,
-        item_id: this.props.item.id,
+        restaurant_id: restaurantId,
+        item_id: item.id,
         rating: ratingValue
       },
       authenticity_token: authenticityToken
@@ -74,18 +77,18 @@ class Rating extends Component {
     return success;
   }
 
-  onClick = e => {
+  onClick = () => {
     if (this.isCurrentRating()) {
       return;
     }
 
+    const { updateCurrentRating, ratingValue } = this.props;
     const success = this.rate();
-    const newClasses = this.getClasses(true);
 
     if (success){
-      let node = document.getElementById(this.getId());
-      node.className = newClasses;
-      this.props.rerenderParentCallback(this.props.ratingValue);
+      const node = document.getElementById(this.getId());
+      node.className = this.getClasses(true);
+      updateCurrentRating(ratingValue);
     } else {
       alert('Something BAD happened');
     }

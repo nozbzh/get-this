@@ -23,14 +23,12 @@ class Autocomplete extends Component {
     };
   }
 
-  fetchRestaurants() {
-    let that = this
-
+  fetchRestaurants = () => {
     axios.get('/api/restaurants')
-      .then(function (response) {
-        that.setState({ suggestions: response.data, isFetching: false });
+      .then((response) => {
+        this.setState({ suggestions: response.data, isFetching: false });
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
   }
