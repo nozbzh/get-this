@@ -13,33 +13,29 @@ class MenuItems extends Component {
     };
   }
 
-  fetchItems() {
-    let that = this
-
+  fetchItems = () => {
     axios.get(`/api/items/get_items_by_restaurant?restaurant_id=${this.props.restaurantId}`)
-      .then(function (response) {
-        that.setState({ items: response.data });
+      .then((response) => {
+        this.setState({ items: response.data });
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
   }
 
-  fetchRatings() {
-    let that = this
-
+  fetchRatings = () => {
     axios.get(`/api/ratings/get_restaurant_ratings_by_user?restaurant_id=${this.props.restaurantId}`)
-      .then(function (response) {
-        that.setState({ ratings: response.data });
+      .then((response) => {
+        this.setState({ ratings: response.data });
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
   }
 
   componentDidMount() {
-    this.fetchItems();
     this.fetchRatings();
+    this.fetchItems();
   }
 
   render() {
@@ -48,7 +44,6 @@ class MenuItems extends Component {
         {this.state.items.map(item => (
           <MenuItem
             key={item.id}
-            // data={{ item: item, currentRating: this.state.ratings[item.id]}}
             item={item}
             restaurantId={this.props.restaurantId}
             currentRating={this.state.ratings[item.id]}
