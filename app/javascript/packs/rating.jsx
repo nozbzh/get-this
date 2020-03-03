@@ -1,39 +1,16 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-// TODO: make this a functional component
 class Rating extends Component {
-  getClasses(isFilled) {
-    if (isFilled) {
-      switch (this.props.ratingValue) {
-        case 'love':
-          return 'btn-rating push i fas fa-heart love';
-        case 'okay':
-          return 'btn-rating i fas fa-check-circle okay';
-        case 'hate':
-          return 'btn-rating i fas fa-thumbs-down hate';
-        case 'save':
-          return 'btn-rating i fas fa-bookmark save';
-        case 'ignore':
-          return 'btn-rating i fas fa-times-circle ignore';
-        default:
-          return '';
-      }
+  baseClasses() {
+    return `btn-rating i ${this.props.faClassName} ${this.props.ratingValue}`;
+  }
+
+  getClasses() {
+    if (this.isCurrentRating()) {
+      return `${this.baseClasses()} fas`;
     } else {
-      switch (this.props.ratingValue) {
-        case 'love':
-          return 'btn-rating push i far fa-heart love';
-        case 'okay':
-          return 'btn-rating i far fa-check-circle okay';
-        case 'hate':
-          return 'btn-rating i far fa-thumbs-down hate';
-        case 'save':
-          return 'btn-rating i far fa-bookmark save';
-        case 'ignore':
-          return 'btn-rating i far fa-times-circle ignore';
-        default:
-          return '';
-      }
+      return `${this.baseClasses()} far`;
     }
   }
 
@@ -42,11 +19,7 @@ class Rating extends Component {
     return (currentRating === ratingValue);
   }
 
-  getId() {
-    const { item, ratingValue } = this.props;
-    return `${item.name}-${ratingValue}`;
-  }
-
+  // TODO: extract function grabbing authenticityToken to a util file
   rate = async () => {
     const { ratingValue, item, restaurantId } = this.props;
     const metas = document.getElementsByTagName('meta');
@@ -82,12 +55,10 @@ class Rating extends Component {
       return;
     }
 
-    const { updateCurrentRating, ratingValue } = this.props;
     const success = this.rate();
 
     if (success){
-      const node = document.getElementById(this.getId());
-      node.className = this.getClasses(true);
+      const { updateCurrentRating, ratingValue } = this.props;
       updateCurrentRating(ratingValue);
     } else {
       alert('Something BAD happened');
@@ -96,13 +67,7 @@ class Rating extends Component {
 
   render() {
     return (
-      <div
-        className={this.getClasses(this.isCurrentRating())}
-        id={this.getId()}
-        onClick={this.onClick}
-      >
-
-      </div>
+      <div className={this.getClasses()} onClick={this.onClick}></div>
     );
   }
 }

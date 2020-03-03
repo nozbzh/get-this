@@ -4,38 +4,40 @@ import MenuItem from "./menu_item";
 import axios from 'axios';
 
 class MenuItems extends Component {
-  constructor(props) {
-    super(props);
+  state = { items: [], ratings: {} };
 
-    this.state = {
-      items: [],
-      ratings: {}
-    };
+  fetchItems = async () => {
+    let uri = `/api/items/get_items_by_restaurant?restaurant_id=${this.props.restaurantId}`;
+    let response = await axios.get(uri);
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      console.log(response);
+      return [];
+    }
   }
 
-  fetchItems = () => {
-    axios.get(`/api/items/get_items_by_restaurant?restaurant_id=${this.props.restaurantId}`)
-      .then((response) => {
-        this.setState({ items: response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  fetchRatings = async () => {
+    let uri = `/api/ratings/get_restaurant_ratings_by_user?restaurant_id=${this.props.restaurantId}`;
+    let response = await axios.get(uri);
+
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      console.log(response);
+      return {};
+    }
   }
 
-  fetchRatings = () => {
-    axios.get(`/api/ratings/get_restaurant_ratings_by_user?restaurant_id=${this.props.restaurantId}`)
-      .then((response) => {
-        this.setState({ ratings: response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  fetchData = () => {
+    Promise.all([this.fetchRatings(), this.fetchItems()]).then((values) => {
+      this.setState({ ratings: values[0], items: values[1] });
+    });
   }
 
   componentDidMount() {
-    this.fetchRatings();
-    this.fetchItems();
+    this.fetchData();
   }
 
   render() {

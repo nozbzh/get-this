@@ -18,6 +18,7 @@ class MenuItem extends Component {
 
         <Rating
           ratingValue={"love"}
+          faClassName={"fa-heart"}
           item={item}
           restaurantId={restaurantId}
           currentRating={this.state.currentRating}
@@ -26,6 +27,7 @@ class MenuItem extends Component {
 
         <Rating
           ratingValue={"hate"}
+          faClassName={"fa-thumbs-down"}
           item={item}
           restaurantId={restaurantId}
           currentRating={this.state.currentRating}
@@ -34,6 +36,7 @@ class MenuItem extends Component {
 
         <Rating
           ratingValue={"okay"}
+          faClassName={"fa-check-circle"}
           item={item}
           restaurantId={restaurantId}
           currentRating={this.state.currentRating}
@@ -42,6 +45,7 @@ class MenuItem extends Component {
 
         <Rating
           ratingValue={"save"}
+          faClassName={"fa-bookmark"}
           item={item}
           restaurantId={restaurantId}
           currentRating={this.state.currentRating}
@@ -50,6 +54,7 @@ class MenuItem extends Component {
 
         <Rating
           ratingValue={"ignore"}
+          faClassName={"fa-times-circle"}
           item={item}
           restaurantId={restaurantId}
           currentRating={this.state.currentRating}
